@@ -1,0 +1,32 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Details</title>
+  </head>
+  <body>
+    <h2>Movie details</h2>
+
+    <h3>Title: {{movie.title}} </h3>
+    <p>Genre: {{movie.genre}} </p>
+    <p>Plot: {{movie.plot}} </p>
+    <br />
+    <br />
+    <ul>
+      {{#each movie.cast}}
+          <strong>Name:</strong>
+          {{name}}
+          <br />
+          <strong>Occupation:</strong>
+          {{occupation}}
+          <br />
+          <strong>CatchPhrase:</strong>
+          {{catchPhrase}}
+          <br />
+        </li>
+      {{/each}}
+
+    </ul>
+
+  </body>
+</html>

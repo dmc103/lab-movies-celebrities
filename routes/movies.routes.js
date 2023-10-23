@@ -8,7 +8,7 @@ const Celebrity = require('../models/Celebrity.model');
 // all your routes here
 
 router.get('/create', (req, res) => {
-    Celebrity.find() // first fetch the list of all the celebrities
+    Celebrity.find() // fetching the list of all the celebrities
     .then((celebrities) => {  //then render the form, passing the list of celebrities to the view
         res.render('movies/new-movie', {celebrities});
     })
@@ -21,8 +21,7 @@ router.get('/create', (req, res) => {
 router.post('/create', (req, res) => {
     console.log(req.body);
     Movie.create(req.body)
-    .then((newMovie) => {
-        console.log(`Movie is added successfully:`, newMovie);
+    .then(() => {
         res.redirect('/movies');
     })
     .catch(error => {
@@ -31,6 +30,37 @@ router.post('/create', (req, res) => {
     });
 
 });
+
+
+router.get('/movies', (req, res) => {
+    Movie.find()
+    .then((allmovies) => {
+        res.render('movies/movies', {movies: allmovies});
+    })
+    .catch(error => {
+        console.log('Something went wrong:', error);
+    
+    })
+
+});
+
+
+router.get('/movies/:movieId', (req, res) => {
+    const {movieId} = req.params;
+    Movie.findById(movieId)
+    .populate('cast')
+    .then((movie) => {
+        res.render('movies/movie-details', {movie});
+    })
+    .catch(error => {
+        console.log('Error retreiving movie details:', error);
+    
+    })
+
+});
+
+
+
 
 module.exports = router;
 
