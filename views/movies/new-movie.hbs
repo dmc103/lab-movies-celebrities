@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adding new movie</title>
+  </head>
+  <body>
+    <h2>Create a new movie</h2>
+    <div>
+      <label for="title">Movie title:</label>
+      <input type="text" id="title" name="title" required />
+      <br />
+      <label for="genre">Movie genre:</label>
+      <input type="text" id="genre" name="genre" required />
+      <br />
+      <label for="plot">Movie Plot:</label>
+      <input type="text" id="plot" name="plot" required />
+      <br />
+      <label for="cast">Choose your Cast:</label>
+      <select name="cast" id="cast" multiple required>
+        {{#each celebrities}}
+          <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+
+      </select>
+    </div>
+
+    <button type="submit">Add this movie</button>
+
+  </body>
+</html>
