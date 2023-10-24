@@ -14,19 +14,28 @@
     <br />
     <ul>
       {{#each movie.cast}}
-          <strong>Name:</strong>
-          {{name}}
-          <br />
-          <strong>Occupation:</strong>
-          {{occupation}}
-          <br />
-          <strong>CatchPhrase:</strong>
-          {{catchPhrase}}
-          <br />
-        </li>
+        <strong>Name:</strong>
+        {{name}}
+        <br />
+        <strong>Occupation:</strong>
+        {{occupation}}
+        <br />
+        <strong>CatchPhrase:</strong>
+        {{catchPhrase}}
+        <br />
       {{/each}}
 
     </ul>
+    <form action="/movies/{{movie._id}}/delete" method="POST">
+      <button type="submit">Delete</button>
+      <br />
+      <a href="/movies/{{movie._id}}/edit">Edit Movie</a>
+    </form>
+    <br />
+
+    <a href="/movies/movies">Back to Movies</a>
+    <br />
+    <a href="/">Back to Home</a>
 
   </body>
 </html>

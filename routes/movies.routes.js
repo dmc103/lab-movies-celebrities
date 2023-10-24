@@ -45,9 +45,9 @@ router.get('/movies', (req, res) => {
 });
 
 
-router.get('/movies/:movieId', (req, res) => {
-    const {movieId} = req.params;
-    Movie.findById(movieId)
+router.get('/:id', (req, res) => {
+    const {id} = req.params;
+    Movie.findById(id)
     .populate('cast')
     .then((movie) => {
         res.render('movies/movie-details', {movie});
@@ -58,6 +58,66 @@ router.get('/movies/:movieId', (req, res) => {
     })
 
 });
+
+
+router.post('/:id/delete', (req, res) => {
+    const {id} = req.params;
+    Movie.findByIdAndRemove(id)
+    .then(() => {
+        res.redirect('/movies');
+    })
+    .catch(error => {
+        console.log('Error deleting movie:', error);
+    
+    })
+
+});
+
+
+
+router.get('/:id/edit', (req, res) => {
+    console.log("Edit route accessed");
+    const {id} = req.params;
+    Movie.findById(id)
+    .then((movie) => {
+        Celebrity.find()
+
+        .then((celebrities) => {
+            celebrities.forEach(celebrity => {
+                celebrity.selected = movie.cast.includes(celebrity._id.toString());
+            });
+            res.render('movies/edit-movie', {movie, celebrities});
+        })
+        .catch(error => {
+            console.log('Error retreiving celebrities:', error);
+        
+        })
+    })
+    .catch(error => {
+        console.log('Error retreiving movie details:', error);
+    
+    })
+
+})
+
+
+router.post('/:id', (req, res) => {
+    const {id} = req.params;
+    const {title, genre, plot, cast} = req.body;
+
+    Movie.findByIdAndUpdate(id, {title, genre, plot, cast}, {new: true})
+    .then((updatedMovie) => {
+        res.redirect(`/movies/${id}`);
+    })
+    .catch(error => {
+        console.log('Error updating movie:', error);
+        res.render('movies/edit-movie',{movie: req.body, errorMessage: 'Error updating movie'});
+    
+    })
+
+
+
+})
 
 
 
